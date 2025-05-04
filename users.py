@@ -17,12 +17,21 @@ class Employee(User):
 class Admin(User):
     def __init__(self, name, email, phone, address):
         super().__init__(name, email, phone, address)
+
+    def add_employee(self,restaurent,employee):
+        restaurent.add_employee(employee)
+
+    def viewEmployee(self,restaurent):
+        restaurent.view_employee()
+
+
+class Restaurent:
+    def __init__(self,name):
+        self.name = name
         self.employees = [] 
 
-    def add_employee(self,name,email,phone,address,age,designation,salary):
-        employee = Employee(name,email,phone,address,age,designation,salary)
+    def add_employee(self,employee):
         self.employees.append(employee)
-        print(f'${name} is added!')
 
     def viewEmployee(self):
         print("Employee List -")
@@ -30,7 +39,23 @@ class Admin(User):
             print(emp.name,emp.email,emp.phone,emp.address)
 
 
-ad = Admin('abul','abul@gmail.con',12345,"dhaka")
-ad.add_employee("karim","karim@gmail.com",654111,"Dhaka",21,'helping hand',12000)
+class Menu:
+    def __init__(self):
+        self.items = []
+    
+    def add_menu_item(self,item):
+        self.items.append(item)
 
-ad.viewEmployee()
+    def find_item(self,item_name):
+        for item in self.items:
+            if item == item_name:
+                return item
+        return None
+    
+    def remove_item(self,item_name):
+        item = self.find_item(item_name)
+        if item:
+            self.items.remove(item)
+            print("Item Deleted!!")
+        else :
+            print("Item Not Found!!")

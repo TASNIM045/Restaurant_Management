@@ -7,6 +7,27 @@ class User(ABC):
         self.phone = phone
         self.address = address
 
+
+class Customar(User):
+    def __init__(self, name, email, phone, address):
+        super().__init__(name, email, phone, address)
+        self.cart = None
+
+    def view_menu(self,restaurent):
+        restaurent.menu.show_menu()
+
+    def add_to_cart(self,restaurent,item_name):
+        item = restaurent.menu.find_item(item_name)
+        if item:
+            pass
+        else:
+            print("Item Not Found!!")
+
+    def view_cart(self):
+        print("****View Cart****")
+        print("Name\tPrice\tQuantity")
+    
+
 class Employee(User):
     def __init__(self, name, email, phone, address,age,designation,salary):
         super().__init__(name, email, phone, address)

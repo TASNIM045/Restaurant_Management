@@ -9,7 +9,7 @@ restaurent = Restaurent("Mamar Restaurent")
 def customar_menu():
     name = input("Enter you name : ")
     email = input("Enter your email : ")
-    phone = input("Enter you phone")
+    phone = input("Enter you phone : ")
     address = input("Enter you address : ")
     customar = Customar(name=name,email=email,phone=phone,address=address)
 
@@ -40,46 +40,64 @@ def customar_menu():
 
 
 def admin_menu():
-    name = input("Enter you name : ")
-    email = input("Enter your email : ")
-    phone = input("Enter you phone")
-    address = input("Enter you address : ")
-    admin = Customar(name=name,email=email,phone=phone,address=address)
-
-
+    name = input("Enter Your Name : ")
+    email = input("Enter Your Email : ")
+    phone = input("Enter Your Phone : ")
+    address = input("Enter Your Address : ")
+    admin = Admin(name=name, email=email, phone=phone, address=address)
+    
     while True:
-        print(f"Welcome To Our Restaurent {admin.name}")
-        print("1. Add new item")
-        print("2. Add new employee")
-        print("3. View employee")
+        print(f"Welcome {admin.name}!!")
+        print("1. Add New Item")
+        print("2. Add New Employee")
+        print("3. View Employee")
         print("4. View Items")
         print("5. Delete Item")
         print("6. Exit")
-
+        
         choice = int(input("Enter Your Choice : "))
         if choice == 1:
-            item_name = input("Enter item name : ")
-            item_pirce = int(input("Enter item price : "))
-            item_quantity = int(input("Enter item quantity : "))
-            item = FoodItem(item_name,item_pirce,item_quantity)
-            admin.add_new_item(item)
+            item_name = input("Enter Item Name : ")
+            item_price = int(input("Enter Item Price : "))
+            item_quantity = int(input("Enter Item Quantity : "))
+            item = FoodItem(item_name, item_price, item_quantity)
+            admin.add_new_item(restaurent, item)
+            
         elif choice == 2:
             name = input("Enter employee name : ")
-            email = input("Enter employee email : ")
             phone = input("Enter employee phone : ")
-            age = input("Enter employee age : ")
+            email = input("Enter employee email : ")
             designation = input("Enter employee designation : ")
-            salary = input("Enter Salary : ")
+            age = input("Enter employee age : ")
+            salary = input("Enter employee salary : ")
             address = input("Enter employee address : ")
-            admin.add_employee(name,email,phone,address,age,designation,salary)
+            employee = Employee(name, email, phone, address,age, designation, salary)
+            admin.add_employee(restaurent, employee)
         elif choice == 3:
             admin.view_employee(restaurent)
         elif choice == 4:
             admin.view_menu(restaurent)
         elif choice == 5:
             item_name = input("Enter item name : ")
-            admin.remove_item(restaurent,item_name)
+            admin.remove_item(restaurent, item_name)
         elif choice == 6:
             break
         else:
             print("Invalid Input")
+
+while True:
+    print("Welcome!!")
+    print("1. Customar")
+    print("2. Admin")
+    print("3. Exit")
+
+    choice = int(input("Enter your choice : "))
+    if choice == 1:
+        customar_menu()
+    elif choice == 2:
+        admin_menu()
+    elif choice == 3:
+        break
+    else:
+        print("Invalid Input!!")
+    

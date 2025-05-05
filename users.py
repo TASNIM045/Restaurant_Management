@@ -11,22 +11,47 @@ class User(ABC):
 class Customar(User):
     def __init__(self, name, email, phone, address):
         super().__init__(name, email, phone, address)
-        self.cart = None
+        self.cart = Order()
 
     def view_menu(self,restaurent):
         restaurent.menu.show_menu()
 
-    def add_to_cart(self,restaurent,item_name):
+    def add_to_cart(self,restaurent,item_name,quantity):
         item = restaurent.menu.find_item(item_name)
         if item:
-            pass
+            item.quantity = quantity
+            self.cart.add_items(item)
+            print("Item Added!!")
         else:
             print("Item Not Found!!")
 
     def view_cart(self):
         print("****View Cart****")
         print("Name\tPrice\tQuantity")
+        for item,quantity in self.cart.items.items():
+            print(f'{item.name}\t{item.price}\t{quantity}')
+        print(f"Total Price: {self.cart.total_price}")
     
+
+class Order:
+    def __init__(self):
+        self.items = {}
+
+    def add_items(self,item):
+        if item in self.items:
+            self.items[item] += item.quantity
+        else :
+            self.items[item] = item.quantity
+    
+    def remove(self,item):
+        if item in self.items:
+            del self.items[item]
+
+    def total_price(self):
+        return sum(item.price * quantity for item,quantity in self.items.items())
+
+    def clear(self):
+        self.items = {}
 
 class Employee(User):
     def __init__(self, name, email, phone, address,age,designation,salary):
@@ -48,7 +73,7 @@ class Admin(User):
     def add_new_item(self,restaurent,item):
         restaurent.menu.add_menu_item(item)
 
-    def delete_item(self,restaurent,item):
+    def remove_item(self,restaurent,item):
         restaurent.menu.remove_item(item)
 
 
@@ -56,7 +81,7 @@ class Restaurent:
     def __init__(self,name):
         self.name = name
         self.employees = []
-        self.menu = FoodItem()
+        self.menu = Menu()
 
     def add_employee(self,employee):
         self.employees.append(employee)
@@ -76,7 +101,7 @@ class Menu:
 
     def find_item(self,item_name):
         for item in self.items:
-            if item == item_name:
+            if item.name.lower() == item_name.lower():
                 return item
         return None
     
@@ -102,8 +127,18 @@ class FoodItem:
         self.quantity = quantity
 
 
-item = FoodItem("Pizza",150,12)
-menu = Menu()
+mamar_restaurent = Restaurent("Mamar Restaurent")
 
-menu.add_menu_item(item)
-menu.show_menu()
+menu = Menu()
+item = FoodItem("Pizza",150,12)
+item1 = FoodItem("Barger",80,20)
+
+admin = Admin('alu','alu@gamil.com',1234,'dhaka')
+admin.add_new_item(mamar_restaurent,item)
+admin.add_new_item(mamar_restaurent,item1)
+
+
+
+customar1 = Customar('alu','alu@gamil.com',1234,'dhaka')
+
+customar1.view_menu(mamar_restaurent)

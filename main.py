@@ -37,3 +37,49 @@ def customar_menu():
             break
         else:
             print("Invalid Input")
+
+
+def admin_menu():
+    name = input("Enter you name : ")
+    email = input("Enter your email : ")
+    phone = input("Enter you phone")
+    address = input("Enter you address : ")
+    admin = Customar(name=name,email=email,phone=phone,address=address)
+
+
+    while True:
+        print(f"Welcome To Our Restaurent {admin.name}")
+        print("1. Add new item")
+        print("2. Add new employee")
+        print("3. View employee")
+        print("4. View Items")
+        print("5. Delete Item")
+        print("6. Exit")
+
+        choice = int(input("Enter Your Choice : "))
+        if choice == 1:
+            item_name = input("Enter item name : ")
+            item_pirce = int(input("Enter item price : "))
+            item_quantity = int(input("Enter item quantity : "))
+            item = FoodItem(item_name,item_pirce,item_quantity)
+            admin.add_new_item(item)
+        elif choice == 2:
+            name = input("Enter employee name : ")
+            email = input("Enter employee email : ")
+            phone = input("Enter employee phone : ")
+            age = input("Enter employee age : ")
+            designation = input("Enter employee designation : ")
+            salary = input("Enter Salary : ")
+            address = input("Enter employee address : ")
+            admin.add_employee(name,email,phone,address,age,designation,salary)
+        elif choice == 3:
+            admin.view_employee(restaurent)
+        elif choice == 4:
+            admin.view_menu(restaurent)
+        elif choice == 5:
+            item_name = input("Enter item name : ")
+            admin.remove_item(restaurent,item_name)
+        elif choice == 6:
+            break
+        else:
+            print("Invalid Input")

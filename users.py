@@ -62,3 +62,6 @@ class Admin(User):
 
     def remove_item(self,restaurent,item):
         restaurent.menu.remove_item(item)
+
+    def view_menu(self,restaurent):
+        restaurent.menu.show_menu()
